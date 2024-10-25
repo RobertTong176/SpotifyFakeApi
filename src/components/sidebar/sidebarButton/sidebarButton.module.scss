@@ -1,0 +1,23 @@
+.btn-body {
+  height: 80px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #f8d9c0;
+  margin-top: 20px;
+  border-radius: 25px;
+  transition: all 0.2s ease;
+  .btn-title {
+    margin: 4px auto;
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
+
+.btn-body.active {
+  background-color: rgb(202, 152, 142,0.9);
+  color: #fff;
+  transform: scale(1.05);
+}
