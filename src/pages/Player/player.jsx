@@ -12,6 +12,7 @@ const Player = () => {
   const [indexTrack, setIndexTrack] = useState([0]);
   const location = useLocation();
 
+
   useEffect(() => {
     if (location.state) {
       APIKit.get("playlists/" + location.state?.id + "/tracks").then((res) => {
@@ -20,12 +21,13 @@ const Player = () => {
       });
     }
   }, [location.state]);
+  console.log('curent:',currentTrack);
   return (
     <div className={cx("screen-container flex")}>
       <div className={cx("left-player-body")}></div>
       <div className={cx("right-player-body")}>
         <SongCard album={currentTrack?.album}/>
-        <Queue />
+        <Queue tracks={tracks} setIndexTrack={setIndexTrack}/>
       </div>
     </div>
   );

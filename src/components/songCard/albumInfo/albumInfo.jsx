@@ -13,15 +13,17 @@ export default function AlbumInfo({ album }) {
     <div className={cx("albumInfo-card")}>
       <div className={cx("albumName-container")}>
         <div className={cx("marquee")}>
-          <p>{album?.name + " - " + artists?.join(' , ')}</p>
+          <p>{album?.name + " - " + artists?.join(" , ")}</p>
         </div>
       </div>
       <div className={cx("album-info")}>
-        <p></p>
-        <div className={cx("album-release")}>
-          <p>{album?.release_date}</p>
-        </div>
+        <p>{`${album?.name} is a ${album?.album_type} by ${artists?.join(
+          " , "
+        )} with ${album?.total_tracks} track(s)`}</p>
       </div>
+        <div className={cx("album-release")}>
+          <p>{`Release date: ${album?.release_date}`}</p>
+        </div>
     </div>
   );
 }
