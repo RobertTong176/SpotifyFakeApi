@@ -2,10 +2,15 @@ import classNames from "classnames/bind";
 import React from "react";
 import styles from "./queue.module.scss";
 const cx = classNames.bind(styles);
-export default function Queue({ tracks, setIndexTrack }) {
-  console.log("tracks: ", tracks);
-  console.log("indexTracks: ", setIndexTrack);
 
+function formatDuration(durationMs) {
+  if (!durationMs) return "0:00";
+  const minutes = Math.floor(durationMs / 60000);
+  const seconds = Math.floor((durationMs % 60000) / 1000);
+  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+}
+
+export default function Queue({ tracks, setCurrentIndex }) {
   return (
     <div className={cx("queue-container")}>
       <div className={cx("queue")}>
@@ -15,10 +20,14 @@ export default function Queue({ tracks, setIndexTrack }) {
             <div
               key={index}
               className={cx("queue-item")}
-              onClick={() => setIndexTrack(index)}
+              onClick={() => {
+                setCurrentIndex(index);
+              }}
             >
-              <p className={cx("track-name")}>{track?.track?.name}</p>
-              <p>0:30p</p>
+              <p className={cx("track-name")}>
+                {track?.track?.name || "Unknown Track"}
+              </p>
+              <p>{formatDuration(track?.track?.duration_ms)}</p>
             </div>
           ))}
         </div>

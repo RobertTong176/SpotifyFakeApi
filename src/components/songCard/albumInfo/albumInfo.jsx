@@ -4,7 +4,6 @@ import styles from "./albumInfo.module.scss";
 
 const cx = classNames.bind(styles);
 export default function AlbumInfo({ album }) {
-  console.log("album: ", album);
   const artists = [];
   album?.artists?.forEach((element) => {
     artists.push(element.name);

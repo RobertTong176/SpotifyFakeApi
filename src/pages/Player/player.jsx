@@ -3,31 +3,40 @@ import React, { useEffect, useState } from "react";
 import styles from "./player.module.scss";
 import APIKit from "../../utils/spotify";
 import { useLocation } from "react-router-dom";
-import SongCard from "../../components/songCard/songCard";
-import Queue from "../../components/queue/queue";
+import SongCard from "../../components/songCard";
+import Queue from "../../components/queue";
+import AudioPlayer from "../../components/audioPlayer";
 const cx = classNames.bind(styles);
 const Player = () => {
   const [tracks, setTracks] = useState([]);
-  const [currentTrack, setCurrentTracks] = useState({});
-  const [indexTrack, setIndexTrack] = useState([0]);
+  const [currentTrack, setCurrentTrack] = useState({});
+  const [currentIndex, setCurrentIndex] = useState(0);
   const location = useLocation();
-
 
   useEffect(() => {
     if (location.state) {
       APIKit.get("playlists/" + location.state?.id + "/tracks").then((res) => {
         setTracks(res?.data?.items);
-        setCurrentTracks(res?.data?.items[0]?.track);
+        setCurrentTrack(res?.data?.items[0]?.track);
       });
     }
   }, [location.state]);
-  console.log('curent:',currentTrack);
+
+  useEffect(() => {
+    if (tracks.length > 0 && currentIndex < tracks.length) {
+      setCurrentTrack(tracks[currentIndex]?.track);
+    }
+  }, [currentIndex, tracks]);
+  console.log(currentTrack);
+  
   return (
     <div className={cx("screen-container flex")}>
-      <div className={cx("left-player-body")}></div>
+      <div className={cx("left-player-body")}>
+        <AudioPlayer currentTrack={currentTrack}/>
+      </div>
       <div className={cx("right-player-body")}>
-        <SongCard album={currentTrack?.album}/>
-        <Queue tracks={tracks} setIndexTrack={setIndexTrack}/>
+        <SongCard album={currentTrack?.album} />
+        <Queue tracks={tracks} setCurrentIndex={setCurrentIndex} />
       </div>
     </div>
   );
