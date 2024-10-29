@@ -2,11 +2,55 @@
     display: flex;
     width: 100%;
     height: 44%;
-    margin: 3% 0%;
+    margin: 2% 0%;
     .player-left-body{
         width: 37%;
     }
     .player-right-body{
         width: 63%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .title-song{
+            font-size: 50px;
+            color: #C4D0E3;
+            text-align: center;
+            font-weight: bold;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            
+        }
+        .artists-name{
+            color: #9aa9c2;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .player-right-bottom{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            .song-duration{
+                display: flex;
+                width: 50%;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                .duration{
+                    font-size: 20px;
+                    font-weight: 700;
+                    margin: 0;
+                    color: #C4D0E3;
+                }
+            }
+        }
     }
 }

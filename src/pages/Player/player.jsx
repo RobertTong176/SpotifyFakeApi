@@ -6,13 +6,15 @@ import { useLocation } from "react-router-dom";
 import SongCard from "../../components/songCard";
 import Queue from "../../components/queue";
 import AudioPlayer from "../../components/audioPlayer";
+import Widgets from "../../components/widgets";
 const cx = classNames.bind(styles);
 const Player = () => {
   const [tracks, setTracks] = useState([]);
   const [currentTrack, setCurrentTrack] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const location = useLocation();
-
+  console.log('heelo:',currentTrack?.album);
+  
   useEffect(() => {
     if (location.state) {
       APIKit.get("playlists/" + location.state?.id + "/tracks").then((res) => {
@@ -27,12 +29,17 @@ const Player = () => {
       setCurrentTrack(tracks[currentIndex]?.track);
     }
   }, [currentIndex, tracks]);
-  console.log(currentTrack);
-  
+
   return (
     <div className={cx("screen-container flex")}>
       <div className={cx("left-player-body")}>
-        <AudioPlayer currentTrack={currentTrack}/>
+        <AudioPlayer
+          currentTrack={currentTrack}
+          total={tracks}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
+        <Widgets artistID = {currentTrack?.album?.artists[0]?.id}/>
       </div>
       <div className={cx("right-player-body")}>
         <SongCard album={currentTrack?.album} />
