@@ -13,7 +13,6 @@ const Player = () => {
   const [currentTrack, setCurrentTrack] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const location = useLocation();
-  console.log('heelo:',currentTrack?.album);
   
   useEffect(() => {
     if (location.state) {

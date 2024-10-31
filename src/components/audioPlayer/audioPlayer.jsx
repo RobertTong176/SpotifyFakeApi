@@ -33,7 +33,11 @@ export default function AudioPlayer({
     }
   };
   // lấy full bài
-  var audioSrc = total[currentIndex]?.track.full_url || total[currentIndex]?.track.preview_url;
+  console.log(total[currentIndex]);
+
+  var audioSrc =
+    total[currentIndex]?.track.preview_url ||
+    `spotify:track:${total[currentIndex]?.track.id}`;
   // Tạo ref audio để lưu trữ audio hiện tại
   const audioRef = useRef(new Audio(total[0]?.track.full_url));
   // Tạo ref để lưu trữ interval theo dõi tiến trình của bài hát
@@ -41,7 +45,7 @@ export default function AudioPlayer({
   // Kiểm tra xem audio đã sẵn sàng để phát hay chưa
   const isReady = useRef(false);
   // Lấy độ dài của audio
-  const [duration,setDuration] = useState(0);
+  const [duration, setDuration] = useState(0);
   // Tính toán phần trăm thời lượng đã phát của bài hát
   const currentPercentage = duration ? (trackProgress / duration) * 100 : 0;
 
@@ -56,12 +60,12 @@ export default function AudioPlayer({
         // Cập nhật thời gian hiện tại của audio
         setTrackProgress(audioRef.current.currentTime);
       }
-    },1000);
+    }, 1000);
   };
 
   // lắng nghe trạng thái isPlaying
   useEffect(() => {
-    if(audioRef.current.src){
+    if (audioRef.current.src) {
       if (isPlaying) {
         audioRef.current.play();
         startTimer();
@@ -69,14 +73,14 @@ export default function AudioPlayer({
         clearInterval(intervalRef.current);
         audioRef.current.pause();
       }
-    }else{
-      if(isPlaying){
-        audioRef.current=new Audio(audioSrc)
-        audioRef.current.play()
-        startTimer()
-      }else{
-         clearInterval(intervalRef.current);
-         audioRef.current.pause();
+    } else {
+      if (isPlaying) {
+        audioRef.current = new Audio(audioSrc);
+        audioRef.current.play();
+        startTimer();
+      } else {
+        clearInterval(intervalRef.current);
+        audioRef.current.pause();
       }
     }
   }, [isPlaying]);
@@ -84,11 +88,11 @@ export default function AudioPlayer({
   useEffect(() => {
     audioRef.current.pause();
     audioRef.current = new Audio(audioSrc);
-    setTrackProgress(0)
+    setTrackProgress(0);
     // setTrackProgress(audioRef.current.currentTime);
-    audioRef.current.onloadedmetadata=()=>{
-      setDuration(audioRef.current.duration)
-    }
+    audioRef.current.onloadedmetadata = () => {
+      setDuration(audioRef.current.duration);
+    };
     if (isReady.current) {
       audioRef.current.play();
       setIsPlaying(true);
@@ -110,9 +114,9 @@ export default function AudioPlayer({
     artists.push(element?.name);
   });
 
-  const addZero = (n)=>{
-   return n > 9 ? "" + n : "0" + n
-  }
+  const addZero = (n) => {
+    return n > 9 ? "" + n : "0" + n;
+  };
 
   return (
     <div className={cx("player-body")}>
@@ -130,7 +134,9 @@ export default function AudioPlayer({
         <p className={cx("artists-name")}>{artists.join(" - ")}</p>
         <div className={cx("player-right-bottom")}>
           <div className={cx("song-duration")}>
-            <p className={cx("duration")}>0:{addZero(Math.round(trackProgress))}</p>
+            <p className={cx("duration")}>
+              0:{addZero(Math.round(trackProgress))}
+            </p>
             <WaveAnimation isPlaying={isPlaying} />
             <p className={cx("duration")}>0:30</p>
           </div>

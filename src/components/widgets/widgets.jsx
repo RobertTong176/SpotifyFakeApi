@@ -9,30 +9,27 @@ export default function Widgets({ artistID }) {
   const [featured, setFeatured] = useState([]);
   const [newRelease, setNewRelease] = useState([]);
 
-  console.log(artistID);
-  console.log(similar);
-  
   useEffect(() => {
     if (artistID) {
       apiClient
         .get(`/artists/${artistID}/related-artists`)
         .then((res) => {
-          const a = res.data?.artists.slice(0, 3);
-          setSimilar[a];
+          const a = res.data?.artists.slice(0, 3)||[];
+          setSimilar(a);
         })
         .catch((err) => console.error(err));
       apiClient
         .get(`/browse/featured-playlists`)
         .then((res) => {
-          const a = res.data?.artists.slice(0, 3);
-          setFeatured[a];
+          const a = res.data?.playlists?.items.slice(0, 3)||[];
+          setFeatured(a);
         })
         .catch((err) => console.error(err));
       apiClient
         .get(`/browse/new-releases`)
         .then((res) => {
-          const a = res.data?.artists.slice(0, 3);
-          setNewRelease[a];
+          const a = res.data?.albums?.items.slice(0, 3)||[];
+          setNewRelease(a);
         })
         .catch((err) => console.error(err));
     }
@@ -40,8 +37,8 @@ export default function Widgets({ artistID }) {
   return (
     <div className={cx("widgets-body")}>
       <WidgetCard title="Similar Artists" similar={similar} />
-      <WidgetCard title="Made for You" similar={featured} />
-      <WidgetCard title="New Release" similar={newRelease} />
+      <WidgetCard title="Made for You" featured={featured} />
+      <WidgetCard title="New Release" newRelease={newRelease} />
     </div>
   );
 }
