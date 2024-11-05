@@ -40,9 +40,9 @@ const Home = () => {
         <Routes>
           <Route path="/" element={<Library />} />
           <Route path="player" element={<Player />} />
-          <Route path="trending" element={<Trending />} />
-          <Route path="feed" element={<Feed />} />
-          <Route path="favorites" element={<Favorites />} />
+          {/* <Route path="trending" element={<Trending />} />
+          <Route path="feed" element={<Feed />} /> */}
+          /<Route path="favorites" element={<Favorites />} />
           <Route path="library" element={<Library />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
